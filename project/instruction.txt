@@ -1,0 +1,11 @@
+It has adopted the app factory model.
+
+All the dependencies need are in requirements.txt
+
+Flask init-db
+It is a custom command that clears all the tables and creates a new table based on models.py in each blueprint.
+
+
+flask feed-db
+This command is to write test data to the database, the test commodity information is written to the database, there is also a user name:test
+password:test

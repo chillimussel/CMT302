@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="mx-auto">
+{% if items %}
+<form action="{{ url_for('shop.delete_cart') }}" method="get">
+<button type="submit" class="btn btn-danger" style="position:relative;left: 50px;top: 20px;">Delete All Items!</button></form>
+<p class="h4" style="position:relative;left: 50px;top: 20px;">Total Price: ${{ total_price }}</p>
+{% else %}
+<h1 class="display-4 text-center">You Didn't Add Any Item to Your Cart Yet.</h1>
+{% endif %}
+
+{% for item, count in items %}
+<div class="card mx-auto my-3" style="max-width: 600px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="{{ url_for('static', filename='images/'+item.image) }}" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ item.name }}</h5>
+        <p class="card-text d-flex justify-content-between"><span class="display-3">${{ item.price }}</span> <span class="fa fa-remove"><span class="display-4">{{ count }}</span></span></p>
+        <div class="btn btn-group">
+         <a href="{{ url_for('shop.item', item_id=item.id) }}" target="_blank" class="btn btn-primary">More Details</a>
+        <form action="{{ url_for('shop.delete_cart') }}" method="post" class="form-inline">
+            <input type="hidden" name="item_id" value="{{ item.id }}">
+            <button type="submit" class="btn btn-outline-danger ml-2" title="Remov from Cart"><span class="fa fa-remove"></span></button>
+        </form>    
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+{% endblock body %}

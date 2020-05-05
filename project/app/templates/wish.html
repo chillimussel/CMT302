@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="mx-auto">
+{% if wishes %}
+<form action="{{ url_for('shop.delete_wish') }}" method="get">
+<button type="submit" class="btn btn-danger" style="position:relative;left: 50px;top: 20px;">Delete All Wishes!</button></form>
+{% else %}
+<h1 class="display-4 text-center">There is Nothing in Your Wish List!</h1>
+{% endif %}
+
+{% for wish in wishes %}
+<div class="card mx-auto my-3" style="max-width: 600px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="{{ url_for('static', filename='images/'+wish.item.image) }}" class="card-img" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ wish.item.name }}</h5>
+        <p class="card-text d-flex justify-content-between"><span class="display-3">${{ wish.item.price }}</span></p>
+        <p class="card-text"><small class="text-muted">created at {{ wish.created.strftime('%Y-%X') }}</small></p>
+        <div class="btn btn-group">
+         <a href="{{ url_for('shop.item', item_id=wish.item.id) }}" target="_blank" class="btn btn-primary">More Details</a>
+        <form action="{{ url_for('shop.wish') }}{{wish.id}}/" method="post" class="form-inline">
+            <button type="submit" class="btn btn-outline-danger ml-2" title="Remov from Wish List"><span class="fa fa-remove"></span></button>
+        </form>    
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+{% endblock body %}
